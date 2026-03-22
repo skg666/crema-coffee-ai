@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://js.puter.com/v2/"></script>
+</head>
+<body>
+    <script>
+        (async () => {
+            try {
+                console.log("Testing puter.ai.chat...");
+                const res = await puter.ai.chat('hello');
+                console.log("typeof res:", typeof res);
+                console.log("res stringified:", JSON.stringify(res));
+                console.log("res object:", res);
+                
+                // test with streaming
+                console.log("Testing puter.ai.chat with stream...");
+                const streamRes = await puter.ai.chat('tell me a joke', {stream: true});
+                console.log("streamRes type:", typeof streamRes);
+                if (streamRes && typeof streamRes[Symbol.asyncIterator] === 'function') {
+                    console.log("It's an async iterator");
+                    for await (const chunk of streamRes) {
+                        console.log("chunk:", JSON.stringify(chunk));
+                        break; // just check the first chunk
+                    }
+                }
+            } catch(e) {
+                console.error("Error:", e);
+            }
+        })();
+    </script>
+</body>
+</html>
